@@ -6,7 +6,5 @@ setup(
     name="properties",
     version=__version__,
     packages=find_packages(),
-    entry_points={
-        "console_scripts": ["properties = properties.__main__:main"]
-    },
+    entry_points={"console_scripts": ["properties = properties.__main__:main"]},
 )
