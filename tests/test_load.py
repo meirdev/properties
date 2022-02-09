@@ -6,7 +6,7 @@ from . import data
 
 
 def test_version():
-    assert properties.__version__ == "0.1.0"
+    assert properties.__version__ == "0.2.0"
 
 
 def test_properties_loads():
