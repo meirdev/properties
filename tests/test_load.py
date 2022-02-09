@@ -1,6 +1,7 @@
 import pytest
 
 import properties
+
 from . import data
 
 
@@ -17,8 +18,11 @@ def test_properties_loads_comments():
 
 
 def test_properties_loads_invalid_line():
-    with pytest.raises(properties.InvalidLineError):
+    with pytest.raises(properties.InvalidLineError) as error:
         properties.loads(data.STRING_INVALID_LINE)
+
+    assert error.value.line == "invalid line"
+    assert error.value.line_number == 3
 
 
 def test_properties_loads_skip_errors():

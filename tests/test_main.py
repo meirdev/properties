@@ -3,6 +3,7 @@ import sys
 import unittest.mock
 
 from properties.__main__ import main
+
 from . import data
 
 

@@ -19,7 +19,7 @@ class InvalidLineError(BaseError):
     """Invalid line"""
 
     def __init__(self, line_number: int, line: str):
-        self.line_number = line
+        self.line_number = line_number
         self.line = line
 
         super().__init__(f"Invalid line {line_number}: {line}")
@@ -41,7 +41,7 @@ def loads(string: str, skip_errors: bool = False) -> Properties:
     """
     properties = dict()
 
-    for i, line in enumerate(string.splitlines()):
+    for i, line in enumerate(string.splitlines(), start=1):
         if line.startswith("#"):
             continue
 
