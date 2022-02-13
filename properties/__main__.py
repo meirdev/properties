@@ -10,7 +10,8 @@ def main() -> None:
 
     args = arg_parser.parse_args()
 
-    print(json.dumps(load(args.file), indent=2))
+    with open(args.file) as fp:
+        print(json.dumps(load(fp), indent=2))
 
 
 if __name__ == "__main__":  # pragma: no cover

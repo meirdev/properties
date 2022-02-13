@@ -1,23 +1,20 @@
-"""
-Parser for properties file, which is a simple key-value file, comments is also supported.
-"""
-import io
-import os
-from typing import Dict, TextIO, Union
+from typing import Dict, TYPE_CHECKING
 
-__version__ = "0.2.0"
+if TYPE_CHECKING:  # pragma: no cover
+    from _typeshed import SupportsRead, SupportsWrite
+
+
+__version__ = "0.3.0"
 
 
 Properties = Dict[str, str]
 
 
 class BaseError(Exception):
-    """Base class"""
+    pass
 
 
 class InvalidLineError(BaseError):
-    """Invalid line"""
-
     def __init__(self, line_number: int, line: str):
         self.line_number = line_number
         self.line = line
@@ -26,19 +23,6 @@ class InvalidLineError(BaseError):
 
 
 def loads(string: str, skip_errors: bool = False) -> Properties:
-    """
-    Load properties from string.
-
-    Args:
-        string: The string to load.
-        skip_errors: Whether to skip invalid lines.
-
-    Returns:
-        A dictionary of properties.
-
-    Raises:
-        InvalidLineError: If skip_errors is False and an invalid line is found.
-    """
     properties = dict()
 
     for i, line in enumerate(string.splitlines(), start=1):
@@ -58,19 +42,16 @@ def loads(string: str, skip_errors: bool = False) -> Properties:
     return properties
 
 
-File = Union[str, os.PathLike, TextIO]
+def load(fp: "SupportsRead[str]", skip_errors: bool = False) -> Properties:
+    return loads(fp.read(), skip_errors)
 
 
-def _read_file(file: File) -> str:
-    if isinstance(file, io.TextIOBase):
-        return file.read()
+def dumps(properties: Properties) -> str:
+    lines = []
+    for key, value in properties.items():
+        lines.append(f"{key}: {value}")
+    return "\n".join(lines)
 
-    with open(str(file)) as fp:
-        return fp.read()
 
-
-def load(file: File, skip_errors: bool = False) -> Properties:
-    """
-    Load properties from file. see :func:`loads`.
-    """
-    return loads(_read_file(file), skip_errors)
+def dump(properties: Properties, fp: "SupportsWrite[str]") -> None:
+    fp.write(dumps(properties))

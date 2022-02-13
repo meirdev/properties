@@ -1,6 +1,6 @@
-Simple library for parsing properties files.
+Parser for properties file, which is a simple key-value file, comments is also supported.
 
-## Example
+## Load from string
 
 ```python
 import properties
@@ -20,4 +20,24 @@ print(properties.loads(string))
     "AGE": "42",
     "TIME": "12:00"
 }
+```
+
+# Dump to string
+
+```python
+import properties
+
+props = {
+    "FULL NAME": "John Doe",
+    "AGE": "42",
+    "TIME": "12:00"
+}
+
+print(properties.dumps(props))
+```
+
+```text
+FULL NAME: John Doe
+AGE: 42
+TIME: 12:00
 ```
