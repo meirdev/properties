@@ -22,7 +22,7 @@ print(properties.loads(string))
 }
 ```
 
-# Dump to string
+## Dump to string
 
 ```python
 import properties
